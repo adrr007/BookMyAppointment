@@ -20,7 +20,7 @@ const mimeTypes = {
 	".wasm": "application/wasm"
 };
 
-const PORT = 314;
+const DEFAULT_PORT = 314;
 
 const authorizePath = "/services/oauth2";
 
@@ -30,6 +30,10 @@ function main(){
 		key:  fs.readFileSync("key.pem"),
 		cert: fs.readFileSync("cert.pem")
 	});
+	
+	let PORT = DEFAULT_PORT;
+	if(+process.argv[2])
+		PORT = +process.argv[2];
 	
 	this.server.listen(PORT, () => console.log("Starting development server at: https://localhost:" + PORT));
 	this.server.on("error", console.log);
