@@ -5,6 +5,10 @@ let backgroundImageUrl;
 let doctors;
 
 window.addEventListener("load", async(e) => {
+	setRandomBackgroundImage();
+});
+
+async function setRandomBackgroundImage(){
 	let image = await fetch(RANDOM_IMAGE_URL);
 	backgroundImageUrl = image.url;
 
@@ -16,7 +20,7 @@ window.addEventListener("load", async(e) => {
 			else
 				document.body.classList.remove("dark");
 		});
-});
+}
 
 async function isImageDark(imageSrc){
 	const THRESHOLD = 0.1;
