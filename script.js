@@ -4,6 +4,7 @@ let backgroundImageUrl;
 
 let
 	doctors,
+	searchInput,
 	dropdown,
 	dropdownElements;
 
@@ -14,10 +15,36 @@ window.addEventListener("load", e => {
 	
 	dropdown = document.querySelector("#dropdown");
 	dropdownElements = doctors.map(e => createDropdownElement(e, dropdown));
+	
+	searchInput = document.querySelector("#searchInput");
+	searchInput.addEventListener("keydown", handleSearch);
 });
 
+function handleSearch(e){
+	let value = searchInput.value;
+	let searchValue = value.replace(/[^A-Za-z]/g, "");
+
+	console.log(value, searchValue);
+
+	if(searchValue.length > 0)
+		dropdown.classList.add("show");
+	else
+		dropdown.classList.remove("show");
+
+	let searchProperties = [
+		"data-doctor-name",
+		"data-doctor-specialization",
+		"data-doctor-hospital"
+	];
+	for(let element of dropdownElements)
+		if(searchProperties.some(e => element.getAttribute(e).includes(searchValue)))
+			element.classList.remove("hide");
+		else
+			element.classList.add("hide");
+}
+
 function createDropdownElement(doctor, parent = null){
-	let e = createElement("div.dropdown-item", parent, {innerText: doctor.name});
+	let e = createElement("div.dropdown-item", parent, {innerText: "Dr. " + doctor.name});
 	e.setAttribute("data-doctor-name", doctor.name);
 	e.setAttribute("data-doctor-specialization", doctor.specialization);
 	e.setAttribute("data-doctor-hospital", doctor.hospital);

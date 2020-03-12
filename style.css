@@ -117,6 +117,9 @@ main{
 
 	transition: all 200ms linear;
 }
+.dropdown-item.hide{
+	display: none;
+}
 .dropdown-item:first-child{
 	border-radius: 25px 25px 0 0;
 }
