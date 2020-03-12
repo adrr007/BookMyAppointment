@@ -251,7 +251,7 @@ function createDoctors(n){
 
 function createDoctor(){
 	return {
-		name: getRandomElement(FIRST_NAMES) + getRandomElement(LAST_NAMES),
+		name: getRandomElement(FIRST_NAMES) + " " + getRandomElement(LAST_NAMES),
 		specialization: getRandomElement(SPECIALIZATIONS),
 		hospital: getRandomElement(HOSPITALS)
 	};

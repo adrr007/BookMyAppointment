@@ -2,11 +2,28 @@ const RANDOM_IMAGE_URL = "https://source.unsplash.com/random/?Sunset";
 
 let backgroundImageUrl;
 
-let doctors;
+let
+	doctors,
+	dropdown,
+	dropdownElements;
 
-window.addEventListener("load", async(e) => {
+window.addEventListener("load", e => {
 	setRandomBackgroundImage();
+
+	doctors = createDoctors(25).sort((a, b) => a.name.localeCompare(b.name));
+	
+	dropdown = document.querySelector("#dropdown");
+	dropdownElements = doctors.map(e => createDropdownElement(e, dropdown));
 });
+
+function createDropdownElement(doctor, parent = null){
+	let e = createElement("div.dropdown-item", parent, {innerText: doctor.name});
+	e.setAttribute("data-doctor-name", doctor.name);
+	e.setAttribute("data-doctor-specialization", doctor.specialization);
+	e.setAttribute("data-doctor-hospital", doctor.hospital);
+
+	return e;
+}
 
 async function setRandomBackgroundImage(){
 	let image = await fetch(RANDOM_IMAGE_URL);
@@ -51,4 +68,37 @@ async function isImageDark(imageSrc){
 		});
 		image.src = imageSrc;
 	});
+}
+
+function createElement(name, parent, options = {}){
+	let classList = name.split(".");
+	let tagName = classList.shift();
+	
+	let id = tagName.split("#");
+	if(id.length > 1){
+		tagName = id[0];
+		id = id[1];
+	}
+	else
+		id = undefined;
+	
+	let element = document.createElement(tagName);
+	
+	if(id)
+		element.id = id;
+	
+	if(classList.length > 0)
+		for(c of classList)
+			element.classList.add(c);
+	
+	for(o in options)
+		if(o in element)
+			element[o] = options[o];
+		else
+			element.setAttribute(o, options[o]);
+	
+	if(parent)
+		parent.appendChild(element);
+	
+	return element;
 }

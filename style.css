@@ -83,18 +83,37 @@ main{
 }
 
 #dropdown{
+	display: none;
+
 	background-color: #fff8;
+	
 	border-radius: 25px;
 	margin-top: 1em;
 }
+#dropdown.show{
+	display: block;
+
+	animation: expand forwards 1s;
+}
+@keyframes expand{
+	from{
+		opacity: 0%;
+	}
+	to{
+		opacity: 100%;
+	}
+}
 
 .dropdown-item{
+	display: block;
+
 	color: black;
 	background-color: transparent;
 
 	font-size: 1.5rem;
+	line-height: 1.5rem;
 
-	padding: 25px;
+	padding: 20px 25px;
 
 	transition: all 200ms linear;
 }
