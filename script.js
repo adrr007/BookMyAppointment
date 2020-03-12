@@ -2,6 +2,8 @@ const RANDOM_IMAGE_URL = "https://source.unsplash.com/random/?Sunset";
 
 let backgroundImageUrl;
 
+let doctors;
+
 window.addEventListener("load", async(e) => {
 	let image = await fetch(RANDOM_IMAGE_URL);
 	backgroundImageUrl = image.url;
@@ -14,9 +16,6 @@ window.addEventListener("load", async(e) => {
 			else
 				document.body.classList.remove("dark");
 		});
-	
-	getLocation()
-		.then(console.log);
 });
 
 async function isImageDark(imageSrc){
@@ -47,11 +46,5 @@ async function isImageDark(imageSrc){
 				resolve(false);	//Light
 		});
 		image.src = imageSrc;
-	});
-}
-
-async function getLocation(){
-	return new Promise((resolve, reject) => {
-		navigator.geolocation.getCurrentPosition(resolve, reject);
 	});
 }

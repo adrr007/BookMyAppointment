@@ -15,16 +15,17 @@ body{
 
 	transition: all 200ms ease;
 	
-	--background: white;
-
-	--primary-color: #fff8;
+	--text-color: black;
+	--background-color: #fff8;
 }
 body.dark{
-	color: white;
+	--text-color: white;
 	--background-color: #0008;
 }
 
 h1, h2, h3, h4, h5, h6{
+	color: var(--text-color);
+	
 	display: block;
 	text-align: center;
 
@@ -43,7 +44,6 @@ input[type = text]{
 	outline: none;
 	
 	border: none;
-	border-radius: 25px;
 	
 	width: 100%;
 	resize: none;
@@ -51,7 +51,7 @@ input[type = text]{
 	box-sizing: border-box;
 	overflow: auto;
 	
-	background-color: var(--primary-color);
+	background-color: #fff8;
 	
 	transition: all 200ms linear;
 }
@@ -78,5 +78,32 @@ main{
 }
 
 #searchInput{
+	border-radius: 25px;
+	font-size: 2rem;
+}
+
+#dropdown{
+	background-color: #fff8;
+	border-radius: 25px;
+	margin-top: 1em;
+}
+
+.dropdown-item{
+	color: black;
+	background-color: transparent;
+
 	font-size: 1.5rem;
+
+	padding: 25px;
+
+	transition: all 200ms linear;
+}
+.dropdown-item:first-child{
+	border-radius: 25px 25px 0 0;
+}
+.dropdown-item:last-child{
+	border-radius: 0 0 25px 25px;
+}
+.dropdown-item:hover{
+	background-color: white;
 }
