@@ -10,8 +10,9 @@ body{
 
 	min-height: 100vh;
 
-	background: var(--background);
+	background-image: var(--background-image);
 	background-size: cover;
+	background-attachment: fixed;
 
 	transition: all 200ms ease;
 	
@@ -63,58 +64,58 @@ input[type = text]:focus{
 
 main{
 	display: grid;
-	grid-template-rows: 1fr;
-	grid-template-columns: 1fr 4fr 1fr;
+	
 	grid-template-areas: "left center right";
-
-	align-self: center;
-
-	margin: 25px;
+	grid-template-columns: 1fr 4fr 1fr;
+	
 	padding: 25px;
 }
 
 #searchBox{
 	grid-area: center;
+	margin-top: 2em;
 }
 
 #searchInput{
 	border-radius: 25px;
-	font-size: 2rem;
+	font-size: 1.5rem;
 }
 
 #dropdown{
-	display: none;
+	max-height: 0;
 
 	background-color: #fff8;
 	
+	overflow: hidden;
+	
 	border-radius: 25px;
-	margin-top: 1em;
+	margin-top: -2em;
+	
+	transition: all 500ms ease;
 }
 #dropdown.show{
-	display: block;
-
-	animation: expand forwards 1s;
-}
-@keyframes expand{
-	from{
-		opacity: 0%;
-	}
-	to{
-		opacity: 100%;
-	}
+	max-height: 60vh;
+	margin-top: 1em;
 }
 
 .dropdown-item{
-	display: block;
+	display: grid;
+	grid-template-areas:
+		"name		specialization"
+		"hospital	hospital";
+	grid-template-columns: 1fr 1fr;
 
 	color: black;
 	background-color: transparent;
 
-	font-size: 1.5rem;
-	line-height: 1.5rem;
+	font-size: 1rem;
+	line-height: 1rem;
 
 	padding: 20px 25px;
-
+	
+	cursor: pointer;
+	user-select: none;
+	
 	transition: all 200ms linear;
 }
 .dropdown-item.hide{
@@ -128,4 +129,18 @@ main{
 }
 .dropdown-item:hover{
 	background-color: white;
+}
+.dropdown-item > .name{
+	grid-area: name;
+}
+.dropdown-item > .name::before{
+	content: "Dr. ";
+}
+.dropdown-item > .specialization{
+	grid-area: specialization;
+	margin-left: 3em;
+}
+.dropdown-item > .hospital{
+	grid-area: hospital;
+	color: #0008;
 }
