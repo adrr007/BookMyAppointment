@@ -1,4 +1,4 @@
-const RANDOM_IMAGE_URL = "https://source.unsplash.com/random/?Sunset";
+const RANDOM_IMAGE_URL = "https://source.unsplash.com/random/{resolution}/?Sunset";
 
 let backgroundImageUrl;
 
@@ -17,53 +17,82 @@ window.addEventListener("load", e => {
 	dropdownElements = doctors.map(e => createDropdownElement(e, dropdown));
 	
 	searchInput = document.querySelector("#searchInput");
-	searchInput.addEventListener("keydown", handleSearch);
+	searchInput.addEventListener("keyup", handleSearch);
 });
 
 function handleSearch(e){
 	let value = searchInput.value;
-	let searchValue = value.replace(/[^A-Za-z]/g, "");
-
-	console.log(value, searchValue);
-
-	if(searchValue.length > 0)
+	if(value.length > 0)
 		dropdown.classList.add("show");
 	else
 		dropdown.classList.remove("show");
-
-	let searchProperties = [
-		"data-doctor-name",
-		"data-doctor-specialization",
-		"data-doctor-hospital"
-	];
+	
+	const MAX_HITS = 5;
+	let n = 0;
 	for(let element of dropdownElements)
-		if(searchProperties.some(e => element.getAttribute(e).includes(searchValue)))
-			element.classList.remove("hide");
-		else
-			element.classList.add("hide");
+		if(n >= MAX_HITS)
+			element.hide();
+		else if(element.filter(value))
+			n++;
+	
+	dropdownElements.sort((a, b) => {
+		let p = b.matchScore - a.matchScore;
+		if(p != 0)
+			return p;
+		
+		return a.data.name.localeCompare(b.data.name);
+	});
+	for(let element of dropdownElements)
+		dropdown.appendChild(element);
 }
 
 function createDropdownElement(doctor, parent = null){
-	let e = createElement("div.dropdown-item", parent, {innerText: "Dr. " + doctor.name});
-	e.setAttribute("data-doctor-name", doctor.name);
-	e.setAttribute("data-doctor-specialization", doctor.specialization);
-	e.setAttribute("data-doctor-hospital", doctor.hospital);
+	let element = createElement("div.dropdown-item", parent);
+	element.data = doctor;
+	
+	element.show = function(){
+		this.classList.remove("hide");
+	};
+	element.hide = function(){
+		this.classList.add("hide");
+	};
+	
+	element.filter = function(text){
+		let searchValues = text.replace(/[^A-Za-z ]/g, "").split(" ");
+		
+		this.matchScore = 0;
+		
+		const INDEX_PROPERTIES = ["name", "specialization", "hospital"];
+		for(let i = 0; i < INDEX_PROPERTIES.length; i++)
+			for(let token of searchValues)
+				if(this.data[INDEX_PROPERTIES[i]].replace(/[^A-Za-z ]/g, "").match(new RegExp(token, "i"))){
+					this.show();
+					this.matchScore = INDEX_PROPERTIES.length - i;
+					return true;
+				}
+		
+		this.hide();
+		return false;
+	};
+	
+	createElement("span.name", element, {innerText: doctor.name});
+	createElement("span.specialization", element, {innerText: doctor.specialization});
+	createElement("span.hospital", element, {innerText: doctor.hospital});
 
-	return e;
+	return element;
 }
 
 async function setRandomBackgroundImage(){
-	let image = await fetch(RANDOM_IMAGE_URL);
+	let resolution = screen.availWidth + "x" + screen.availHeight;
+	let image = await fetch(RANDOM_IMAGE_URL.replace("{resolution}", resolution));
 	backgroundImageUrl = image.url;
 
-	document.body.style.setProperty("--background", "url('" + backgroundImageUrl + "')");
-	isImageDark(backgroundImageUrl)
-		.then(e => {
-			if(e)
-				document.body.classList.add("dark");
-			else
-				document.body.classList.remove("dark");
-		});
+	document.body.style.setProperty("--background-image", "url('" + backgroundImageUrl + "')");
+	let dark = await isImageDark(backgroundImageUrl)
+	if(dark)
+		document.body.classList.add("dark");
+	else
+		document.body.classList.remove("dark");
 }
 
 async function isImageDark(imageSrc){
