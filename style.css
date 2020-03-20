@@ -104,6 +104,7 @@ main{
 		"name		specialization"
 		"hospital	hospital";
 	grid-template-columns: 1fr 1fr;
+	row-gap: 0.2em;
 
 	color: black;
 	background-color: transparent;
