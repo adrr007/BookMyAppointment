@@ -24,8 +24,10 @@ function handleSearch(e){
 	let value = searchInput.value;
 	if(value.length > 0)
 		dropdown.classList.add("show");
-	else
+	else{
 		dropdown.classList.remove("show");
+		return;
+	}
 	
 	const MAX_HITS = 5;
 	let n = 0;

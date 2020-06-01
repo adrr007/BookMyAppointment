@@ -3,7 +3,8 @@ body{
 	padding: 0;
 
 	display: grid;
-	grid-template-rows: auto 1fr;
+	justify-content: center;
+	grid-template-rows: min-content auto;
 
 	font-family: Sans-Serif;
 	font-size: 12px;
@@ -41,7 +42,7 @@ h1{
 input[type = text]{
 	font-size: 1rem;
 	
-	padding: 0.5em 1em;
+	padding: 0;
 	outline: none;
 	
 	border: none;
@@ -52,36 +53,59 @@ input[type = text]{
 	box-sizing: border-box;
 	overflow: auto;
 	
-	background-color: #fff8;
-	
-	transition: all 200ms linear;
-}
-input[type = text]:focus{
-	background-color: white;
-	
-	box-shadow: #000A 0 0 10px;
+	background-color: transparent;
 }
 
 main{
 	display: grid;
-	
-	grid-template-areas: "left center right";
-	grid-template-columns: 1fr 4fr 1fr;
-	
+}
+
+#Search{
+	display: grid;
+	width: 70vw;
+	height: min-content;
+	place-content: center;
 	padding: 25px;
 }
 
 #searchBox{
-	grid-area: center;
+	display: grid;
+	grid-template-areas:
+		"logo		search"
+		"dropdown	dropdown"
+	;
+	grid-template-columns: min-content 1fr;
+	
+	width: 60vw;
+	
 	margin-top: 2em;
+	padding: 1em;
+	
+	border-radius: 25px;
+	background-color: #fff8;
+	
+	transition: all 200ms linear;
+}
+#searchBox:focus,
+#searchBox:focus-within{
+	background-color: white;
+	box-shadow: #000a 0 0 10px;
+}
+
+#SearchLogoDisplay{
+	grid-area: logo;
+	width: auto;
+	height: 100%;
 }
 
 #searchInput{
-	border-radius: 25px;
-	font-size: 1.5rem;
+	grid-area: search;
+	font-size: 2rem;
+	margin-left: 1em;
 }
 
 #dropdown{
+	grid-area: dropdown;
 	max-height: 0;
 
 	background-color: #fff8;
@@ -89,7 +113,7 @@ main{
 	overflow: hidden;
 	
 	border-radius: 25px;
-	margin-top: -2em;
+	margin-top: 0;
 	
 	transition: all 500ms ease;
 }
