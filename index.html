@@ -5,11 +5,11 @@
 		<meta charset = "UTF-8" />
 		<meta name = "viewport" content = "width=device-width, initial-scale=1.0" />
 		<meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-		
+
 		<link rel = "icon" href = "#" sizes = "any" />
-		
+
 		<link rel = "stylesheet" href = "style.css" type = "text/css" />
-		
+
 		<script src = "RandomDataGenerator.js"></script>
 		<script src = "script.js"></script>
 	</head>
@@ -26,7 +26,7 @@
 						<stop offset = "0%" stop-color = "#c31432" />
 						<stop offset = "100%" stop-color = "#240b36" />
 					</linearGradient>
-					
+
 					<style>
 						#LogoBackground{
 							fill: url(#LogoGradientLight);
@@ -34,7 +34,7 @@
 						#LogoImage{
 							fill: black;
 						}
-						
+
 						.dark #LogoBackground{
 							fill: url(#LogoGradientDark);
 						}
@@ -43,8 +43,8 @@
 						}
 					</style>
 				</defs>
-			
-			
+
+
 				<circle id = "LogoBackground" cx = "50%" cy = "50%" r = "50%" />
 				<path
 					id = "LogoImage"
@@ -63,17 +63,17 @@
 					"
 				/>
 			</svg>
-			
+
 			<script>
-				document.querySelector("[rel = icon]").href = 
+				document.querySelector("[rel = icon]").href =
 					"data:image/svg+xml," +
 					encodeURIComponent(document.querySelector("svg#logo").outerHTML);
 			</script>
 		</div>
-	
-		<h1>Welcome, How can we help you today?</h1>
+
+		<h1 id = "welcome">Welcome, How can we help you today?</h1>
 		<main>
-			<section id = "Search">
+			<section id = "Search" class = "show">
 				<div id = "searchBox">
 					<svg
 						id = "SearchLogoDisplay"
@@ -83,11 +83,79 @@
 					>
 						<use class = "dark" href = "#logo" />
 					</svg>
-					
+
 					<input id = "searchInput" type = "text" data-gramm = "false">
-					
+
 					<div id = "dropdown"></div>
 				</div>
+			</section>
+
+			<section id = "Appointment">
+				<form id = "appointmentForm">
+					<h2>Appointment with:</h2>
+
+					<input
+						type = "text"
+						id = "doctor"
+						name = "doctor"
+						readonly = ""
+					/>
+
+					<!-- <input -->
+						<!-- type = "text" -->
+						<!-- id = "hospital" -->
+						<!-- name = "hospital" -->
+						<!-- readonly = "" -->
+					<!-- /> -->
+
+					<input
+						type = "text"
+						id = "firstName"
+						name = "firstName"
+						placeholder = "First Name"
+						data-gramm = "false"
+						required = ""
+					/>
+					<input
+						type = "text"
+						id = "lastName"
+						name = "lastName"
+						placeholder = "Last Name"
+						data-gramm = "false"
+						required = ""
+					/>
+
+					<div id = "gender">
+						<div class = "radioInput">
+							<input type = "radio" id = "male" name = "gender" value = "male" required = "" />
+							<label for = "male">Male</label>
+						</div>
+
+						<div class = "radioInput">
+							<input type = "radio" id = "female" name = "gender" value = "female" required = "" />
+							<label for = "female">Female</label>
+						</div>
+
+						<div class = "radioInput">
+							<input type = "radio" id = "other" name = "gender" value = "other" required = "" />
+							<label for = "other">Other</label>
+						</div>
+					</div>
+
+					<label for = "time">Time:</label>
+					<input
+						type = "time"
+						id = "time"
+						name = "time"
+
+						min = "06:00"
+						max = "18:00"
+						step = "900"
+						required = ""
+					/>
+
+					<input type = "submit" />
+				</form>
 			</section>
 		</main>
 	</body>

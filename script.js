@@ -12,10 +12,10 @@ window.addEventListener("load", e => {
 	setRandomBackgroundImage();
 
 	doctors = createDoctors(25).sort((a, b) => a.name.localeCompare(b.name));
-	
+
 	dropdown = document.querySelector("#dropdown");
 	dropdownElements = doctors.map(e => createDropdownElement(e, dropdown));
-	
+
 	searchInput = document.querySelector("#searchInput");
 	searchInput.addEventListener("keyup", handleSearch);
 });
@@ -28,7 +28,7 @@ function handleSearch(e){
 		dropdown.classList.remove("show");
 		return;
 	}
-	
+
 	const MAX_HITS = 5;
 	let n = 0;
 	for(let element of dropdownElements)
@@ -36,12 +36,12 @@ function handleSearch(e){
 			element.hide();
 		else if(element.filter(value))
 			n++;
-	
+
 	dropdownElements.sort((a, b) => {
 		let p = b.matchScore - a.matchScore;
 		if(p != 0)
 			return p;
-		
+
 		return a.data.name.localeCompare(b.data.name);
 	});
 	for(let element of dropdownElements)
@@ -51,19 +51,19 @@ function handleSearch(e){
 function createDropdownElement(doctor, parent = null){
 	let element = createElement("div.dropdown-item", parent);
 	element.data = doctor;
-	
+
 	element.show = function(){
 		this.classList.remove("hide");
 	};
 	element.hide = function(){
 		this.classList.add("hide");
 	};
-	
+
 	element.filter = function(text){
 		let searchValues = text.replace(/[^A-Za-z ]/g, "").split(" ");
-		
+
 		this.matchScore = 0;
-		
+
 		const INDEX_PROPERTIES = ["name", "specialization", "hospital"];
 		for(let i = 0; i < INDEX_PROPERTIES.length; i++)
 			for(let token of searchValues)
@@ -72,16 +72,31 @@ function createDropdownElement(doctor, parent = null){
 					this.matchScore = INDEX_PROPERTIES.length - i;
 					return true;
 				}
-		
+
 		this.hide();
 		return false;
 	};
-	
+
+	element.addEventListener("click", bookAppointment);
+
 	createElement("span.name", element, {innerText: doctor.name});
 	createElement("span.specialization", element, {innerText: doctor.specialization});
 	createElement("span.hospital", element, {innerText: doctor.hospital});
 
 	return element;
+}
+
+function bookAppointment(e){
+	document.querySelector("#welcome").classList.add("hide");
+	document.querySelector("#Search").classList.remove("show");
+	document.querySelector("#Appointment").classList.add("show");
+
+	let data = e.target.closest("div").data;
+	document.querySelector("#doctor").value =
+		"Dr. " +
+		data.name +
+		", " +
+		data.specialization;
 }
 
 async function setRandomBackgroundImage(){
@@ -99,25 +114,25 @@ async function setRandomBackgroundImage(){
 
 async function isImageDark(imageSrc){
 	const THRESHOLD = 0.1;
-	
+
 	return new Promise((resolve, reject) => {
 		const image = new Image();
 		image.crossOrigin = "anonymous";
 		image.addEventListener("load", e => {
 			const canvas = new OffscreenCanvas(image.width, image.height);
-			
+
 			const g = canvas.getContext("2d");
 			g.drawImage(image, 0, 0);
-			
+
 			const data = g.getImageData(0, 0, canvas.width, canvas.height).data;
-			
+
 			let light = 0, dark = 0;
 			for(let x = 0; x < data.length; x += 4)
 				if(Math.max(data[x], data[x + 1], data[x + 2]) < 128)
 					dark++;
 				else
 					light++;
-			
+
 			let delta = (light - dark)/(canvas.width * canvas.height);
 			if(delta + THRESHOLD < 0)
 				resolve(true);	//Dark
@@ -131,7 +146,7 @@ async function isImageDark(imageSrc){
 function createElement(name, parent, options = {}){
 	let classList = name.split(".");
 	let tagName = classList.shift();
-	
+
 	let id = tagName.split("#");
 	if(id.length > 1){
 		tagName = id[0];
@@ -139,24 +154,24 @@ function createElement(name, parent, options = {}){
 	}
 	else
 		id = undefined;
-	
+
 	let element = document.createElement(tagName);
-	
+
 	if(id)
 		element.id = id;
-	
+
 	if(classList.length > 0)
 		for(c of classList)
 			element.classList.add(c);
-	
+
 	for(o in options)
 		if(o in element)
 			element[o] = options[o];
 		else
 			element.setAttribute(o, options[o]);
-	
+
 	if(parent)
 		parent.appendChild(element);
-	
+
 	return element;
 }
