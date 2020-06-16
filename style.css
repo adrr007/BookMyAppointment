@@ -106,7 +106,7 @@ section.show{
 	margin-top: 2em;
 	padding: 1em;
 
-	border-radius: 2.5rem;
+	border-radius: 2.5em;
 	background-color: #fff8;
 
 	transition: all 200ms linear;
@@ -128,7 +128,7 @@ section.show{
 
 #searchInput{
 	grid-area: search;
-	font-size: 2rem;
+	font-size: 2.5em;
 	margin-left: 1em;
 	background-color: transparent;
 }
