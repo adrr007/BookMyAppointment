@@ -104,7 +104,7 @@ section.show{
 	width: 60vw;
 
 	margin-top: 2em;
-	padding: 1em;
+	padding: 1.25em;
 
 	border-radius: 2.5em;
 	background-color: #fff8;
@@ -141,14 +141,14 @@ section.show{
 
 	overflow: hidden;
 
-	border-radius: 2rem;
+	border-radius: 2em;
 	margin-top: 0;
 
 	transition: all 500ms ease;
 }
 #dropdown.show{
 	max-height: 60vh;
-	margin-top: 1em;
+	margin-top: 1.5em;
 }
 
 .dropdown-item{
@@ -165,7 +165,7 @@ section.show{
 	font-size: 1.5em;
 	line-height: 1em;
 
-	padding: 20px 2em;
+	padding: 1.25em 1.5em;
 
 	cursor: pointer;
 	user-select: none;
