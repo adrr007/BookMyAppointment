@@ -108,6 +108,9 @@ section.show{
 
 	transition: all 200ms linear;
 }
+#searchBox:hover{
+	background-color: #fffb
+}
 #searchBox:focus,
 #searchBox:focus-within{
 	background-color: white;
