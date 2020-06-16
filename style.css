@@ -20,23 +20,15 @@ body{
 	--text-color: black;
 	--background-color: #fff8;
 }
+@media only screen and (max-width: 600px){
+	body{
+		font-size: 8px;
+	}
+}
+
 body.dark{
 	--text-color: white;
 	--background-color: #0008;
-}
-
-h1, h2, h3, h4, h5, h6{
-	color: var(--text-color);
-
-	display: block;
-	text-align: center;
-
-	margin: 0;
-	padding: 15px;
-}
-
-h1{
-	font-size: 2.5rem;
 }
 
 input{
@@ -63,6 +55,16 @@ input[type = text]{
 }
 
 #welcome{
+	color: var(--text-color);
+
+	display: block;
+	text-align: center;
+
+	margin: 0;
+	padding: 1rem;
+	
+	font-size: 3.5em;
+	
 	height: 100%;
 	opacity: 1;
 	transition: all 200ms ease;
@@ -74,6 +76,7 @@ input[type = text]{
 
 main{
 	display: grid;
+	justify-content: center;
 }
 
 section{
@@ -87,7 +90,7 @@ section.show{
 	max-width: 70vw;
 	height: min-content;
 	place-content: center;
-	padding: 25px;
+	padding: 2em;
 }
 
 #searchBox{
@@ -103,7 +106,7 @@ section.show{
 	margin-top: 2em;
 	padding: 1em;
 
-	border-radius: 30px;
+	border-radius: 2.5rem;
 	background-color: #fff8;
 
 	transition: all 200ms linear;
@@ -138,7 +141,7 @@ section.show{
 
 	overflow: hidden;
 
-	border-radius: 25px;
+	border-radius: 2rem;
 	margin-top: 0;
 
 	transition: all 500ms ease;
@@ -159,10 +162,10 @@ section.show{
 	color: black;
 	background-color: transparent;
 
-	font-size: 1rem;
-	line-height: 1rem;
+	font-size: 1.5em;
+	line-height: 1em;
 
-	padding: 20px 25px;
+	padding: 20px 2em;
 
 	cursor: pointer;
 	user-select: none;
@@ -173,10 +176,10 @@ section.show{
 	display: none;
 }
 .dropdown-item:first-child{
-	border-radius: 25px 25px 0 0;
+	border-radius: 2em 2em 0 0;
 }
 .dropdown-item:last-child{
-	border-radius: 0 0 25px 25px;
+	border-radius: 0 0 2em 2em;
 }
 .dropdown-item:hover{
 	background-color: white;
@@ -199,6 +202,7 @@ section.show{
 
 #Appointment{
 	place-content: center;
+	max-width: 70vw;
 }
 
 #appointmentForm{
@@ -212,8 +216,13 @@ section.show{
 	font-size: 2em;
 	padding: 1em;
 
-	border-radius: 25px;
+	border-radius: 1.5em;
 	background-color: #fff8;
+}
+
+#appointmentForm h2{
+	margin: 0;
+	text-align: center;
 }
 
 #appointmentForm input{
@@ -237,6 +246,13 @@ section.show{
 	max-width: unset;
 	grid-column: span 2;
 	font-size: 1em;
+}
+
+@media only screen and (max-width: 600px){
+	#appointmentForm #firstName,
+	#appointmentForm #lastName{
+		grid-column: span 2;
+	}
 }
 
 label{
