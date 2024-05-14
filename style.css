@@ -147,7 +147,7 @@ section.show{
 	transition: all 500ms ease;
 }
 #dropdown.show{
-	max-height: 60vh;
+	max-height: 50vh;
 	margin-top: 1.5em;
 }
 
